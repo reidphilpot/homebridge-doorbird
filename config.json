@@ -1,23 +1,25 @@
 {
-    "bridge": {
-        "name": "Homebridge",
-        "username": "XX:XX:XX:XX:XX:XX",
-        "port": 51827,
-        "pin": "xxx-xx-xxx"
-    },
+  "bridge": {
+    "name": "Homebridge",
+    "username": "XX:XX:XX:XX:XX:XX",
+    "port": 51827,
+    "pin": "xxx-xx-xxx"
+  },
+  "platforms": [
+    {
+      "platform": "Doorbell",
+      "doorbells": [
+        {
+          "name": "DoorBird",
+          "username": "",
+          "password": "",
+          "doorbird_ip": "",
+          "check_request": "/bha-api/monitor.cgi?check=doorbell"
+        }
+      ]
+    }
+  ],
+  "accessories": [
 
-    "description": "This is an example configuration file . You can use this as a template for creating your own configuration file containing devices you actually own.",
-
-    "platforms": [
-    	    {
-	    "platform": "Doorbell",
-	    "doorbells": [
-	    {
-            "name": "Doorbell Front"
-	    }
-	    ]
-	    }
-    ],
-
-    "accessories": []
+  ]
 }
