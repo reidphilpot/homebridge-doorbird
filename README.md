@@ -24,7 +24,8 @@ sudo npm install -g git+https://github.com/Samfox2/homebridge-doorbird.git
 Add the platform in `config.json` in your home directory inside `.homebridge`.
 
 ```js
-      platform": "Doorbell",
+    {
+      "platform": "Doorbell",
       "doorbells": [
         {
           "name": "DoorBird",
