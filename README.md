@@ -1,6 +1,6 @@
-# homebridge-doorbell
+# homebridge-doorbird
 
-`homebridge-doorbell` is a plugin for Homebridge.
+`homebridge-doorbird` is a plugin for Homebridge.
 
 ## Installation
 
@@ -11,9 +11,9 @@ If you are running on a Raspberry, you will find a tutorial in the [homebridge-p
 ```sh
 sudo npm install -g homebridge
 ```
-2 Install homebridge-doorbell:
+2 Install homebridge-doorbird:
 ```sh
-sudo npm install -g git+https://github.com/Samfox2/homebridge-doorbell.git
+sudo npm install -g git+https://github.com/Samfox2/homebridge-doorbird.git
 ```
 3 Configure plugin:
 ```sh
@@ -24,19 +24,18 @@ sudo npm install -g git+https://github.com/Samfox2/homebridge-doorbell.git
 Add the platform in `config.json` in your home directory inside `.homebridge`.
 
 ```js
-{
-	    "platform": "Doorbell",
-	    "doorbells": [
-	    {
-            "name": "Doorbell Front"
-	    }
-	    ]
-}
+      platform": "Doorbell",
+      "doorbells": [
+        {
+          "name": "DoorBird",
+          "username": "",
+          "password": "",
+          "doorbird_ip": "",
+          "check_request": "/bha-api/monitor.cgi?check=doorbell"
+        }
+       ]
+      }
 ```
 
 ## Note
-Currently the plugin only emulates the doorbell with the identify command.
-If placed in a room with a camera it sends a notification with a snapshot/stream to your ios device after pushing the "identify" button in a homekit app.
-
-Feel free to contribute to make this a better plugin!
-
+If placed in a room with a camera it sends a notification with a snapshot/stream to your ios device after user pushes the doorbell button.
