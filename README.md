@@ -1,6 +1,6 @@
 # homebridge-doorbird
 
-`homebridge-doorbird` is a plugin for Homebridge.
+`homebridge-doorbird` is a plugin for Homebridge.  Giving you a basic experience with your [DoorBird](https://www.doorbird.com) unit.
 
 ## Installation
 
