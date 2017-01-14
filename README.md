@@ -38,4 +38,4 @@ Add the platform in `config.json` in your home directory inside `.homebridge`.
 ```
 
 ## Note
-If placed in a room with a camera it sends a notification with a snapshot/stream to your ios device after user pushes the doorbell button.
+If placed in a room with a camera it sends a notification with a snapshot/stream to your ios device after user pushes the DoorBird's doorbell button.
