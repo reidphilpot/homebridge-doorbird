@@ -12,7 +12,7 @@ sudo npm install -g homebridge
 ```
 2 Install homebridge-doorbird:
 ```sh
-sudo npm install -g git+https://github.com/Samfox2/homebridge-doorbird.git
+sudo npm install -g git+https://github.com/brownad/homebridge-doorbird.git
 ```
 3 Configure plugin:
 ```sh
