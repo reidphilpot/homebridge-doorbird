@@ -34,11 +34,9 @@ DoorBirdPlatform.prototype = {
 function DoorBirdAccessory(log, config) {
   this.log = log;
   this.name = config["name"];
-  this.username = config["username"];
-  this.password = config["password"];
   this.doorbird_ip = config["doorbird_ip"];
-  this.check_request = config["check_request"];
-  this.url = "http://" + this.username + ":" + this.password + "@" + this.doorbird_ip + this.check_request
+  this.check_request = config["notification_url"];
+  this.url = "http://" + this.doorbird_ip + this.check_request
   this.binaryState = 0; // switch state, default is OFF
   this.log("Starting a homebridge-doorbird device with name '" + this.name + "'...");
   this.service;
