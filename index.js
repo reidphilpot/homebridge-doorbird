@@ -46,7 +46,7 @@ function DoorBirdAccessory(log, config) {
 }
 
 DoorBirdAccessory.prototype.request = function() {
-  // make request
+  // register for DooBird push notification
   request
     .get(this.url)
     .end(function(err, res){
@@ -54,12 +54,10 @@ DoorBirdAccessory.prototype.request = function() {
         this.log('DoorBird connection error: ' + err)
       } else {
           this.log('DoorBird response: ' + res.text);
-          if (this.lastState !== res.thisState) {
-          }
-          this.lastState = res.thisState
         });
     }
-
+	 
+  //incoming request received fire off the doorbell
   setTimeout(function() {
       this.log("Doorbell pressed");
       this.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(res.thisState);
