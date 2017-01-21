@@ -34,7 +34,7 @@ Add the platform in `config.json` in your home directory inside `.homebridge`.
           "password": "",
           "doorbird_ip": "",
           "homebridge_ip": "",
-          "notification": "/bha-api/notification.cgi?event=doorbell&subscribe=1"
+          "notification_url": "/bha-api/notification.cgi?event=doorbell&subscribe=1"
         }
        ]
       }
