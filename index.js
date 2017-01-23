@@ -1,5 +1,5 @@
 var Service, Characteristic;
-var requst = require('superagent');
+var request = require('superagent');
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
