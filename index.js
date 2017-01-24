@@ -1,5 +1,6 @@
 var Service, Characteristic;
-var request = require('superagent');
+var request = require('request');
+var pollingtoevent = require('polling-to-event');
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -34,34 +35,40 @@ DoorBirdPlatform.prototype = {
 function DoorBirdAccessory(log, config) {
   this.log = log;
   this.name = config["name"];
-  this.doorbird_ip = config["doorbird_ip"];
-  this.homebridge_ip = config["homebridge_ip"];	
-  this.check_request = config["notification_url"];
-  this.url = "http://" + this.doorbird_ip + this.check_request + "&url=" + this.homebridge_ip
+  this.username = config["username"];
+  this.password = config["password"];
+  this.url =  config["doorbird_url"];
   this.binaryState = 0; // switch state, default is OFF
   this.log("Starting a homebridge-doorbird device with name '" + this.name + "'...");
   this.service;
   this.timeout = 2;
-  this.lastState = 0
-}
+  this.state = false;
+  var that = this;
+  
+  var emitter = pollingtoevent(function(done) {
+        that.httpRequest(that.url, "", "GET", that.username, that.password, function(error, response, responseBody) {
+            if (error) {
+                that.log('DoorBird get status failed: %s', error.message);
+                callback(error);
+            } else {                    
+                done(null, responseBody);
+            }
+        })
+    },
+    {
+        longpolling:true
+    });
 
-DoorBirdAccessory.prototype.request = function() {
-  // register for DooBird push notification
-  request
-    .get(this.url)
-    .end(function(err, res){
-      if(err || !res.ok) {
-        this.log('DoorBird connection error: ' + err)
-      } else {
-          this.log('DoorBird response: ' + res.text);
-        });
-    }
-	 
-  //incoming request received fire off the doorbell
-  setTimeout(function() {
-      this.log("Doorbell pressed");
-      this.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(res.thisState);
-  }.bind(this), 10000);
+    emitter.on("longpoll", function(data) {       
+        var binaryState = parseInt(data.split(/[= ]+/).pop());
+        that.state = binaryState > 0;
+        that.log("DoorBird doorbell state is currently ", binaryState);
+	
+	setTimeout(function() {
+      	    that.log("Doorbell pressed");
+      	    that.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(that.state);
+  	}.bind(that), 10000);
+    });
 }
 
 DoorBirdAccessory.prototype.getState = function(callback) {
