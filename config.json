@@ -11,9 +11,9 @@
       "doorbells": [
         {
           "name": "DoorBird",
-          "doorbird_ip": "",
-          "homebridge_ip": "",
-          "notification_url": "/bha-api/notification.cgi?event=doorbell&subscribe=1"
+          "username": "",
+          "password": "",
+          "doorbird_url": "/bha-api/monitor.cgi?check=doorbell"
         }
       ]
     }
