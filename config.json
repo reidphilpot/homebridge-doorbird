@@ -11,8 +11,9 @@
       "doorbells": [
         {
           "name": "DoorBird",
-          "username": "",
-          "password": "",
+          "doorbird_ip": "",
+          "doorbird_username": "",
+          "doorbird_password": "",
           "doorbird_url": "/bha-api/monitor.cgi?check=doorbell"
         }
       ]
