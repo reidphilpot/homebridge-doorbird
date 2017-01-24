@@ -43,6 +43,7 @@ function DoorBirdAccessory(log, config) {
   this.log("Starting a homebridge-doorbird device with name '" + this.name + "'...");
   this.service;
   this.timeout = 2;
+  this.state = false;
   
   var emitter = pollingtoevent(function(done) {
         this.httpRequest(this.url, "", "GET", this.username, this.password, function(error, response, responseBody) {
@@ -64,7 +65,7 @@ function DoorBirdAccessory(log, config) {
         this.log("DoorBird doorbell state is currently ", binaryState);
 	
 	setTimeout(function() {
-      	   this.service.getCharacteristic(Characteristic.On).setValue(binaryState);
+      	   this.service.getCharacteristic(Characteristic.On).setValue(this.state);
       	   setInterval(this.request.bind(this), 100);
     	});
     });
