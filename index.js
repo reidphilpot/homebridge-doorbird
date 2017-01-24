@@ -67,7 +67,7 @@ function DoorBirdAccessory(log, config) {
       	   this.service.getCharacteristic(Characteristic.On).setValue(binaryState);
       	   setInterval(this.request.bind(this), 100);
     	});
-    }
+    });
 }	       
 
 DoorBirdAccessory.prototype.getState = function(callback) {
