@@ -43,12 +43,11 @@ function DoorBirdAccessory(log, config) {
   this.service;
   this.timeout = 2;
   this.state = false;
-  var that = this;
   
   var emitter = pollingtoevent(function(done) {
-        that.httpRequest(that.url, "", "GET", that.username, that.password, function(error, response, responseBody) {
+        that.httpRequest(this.url, "", "GET", that.username, this.password, function(error, response, responseBody) {
             if (error) {
-                that.log('DoorBird get status failed: %s', error.message);
+                this.log('DoorBird get status failed: %s', error.message);
                 callback(error);
             } else {                    
                 done(null, responseBody);
@@ -61,13 +60,13 @@ function DoorBirdAccessory(log, config) {
 
     emitter.on("longpoll", function(data) {       
         var binaryState = parseInt(data.split(/[= ]+/).pop());
-        that.state = binaryState > 0;
-        that.log("DoorBird doorbell state is currently ", binaryState);
+        this.state = binaryState > 0;
+        this.log("DoorBird doorbell state is currently ", binaryState);
 	
 	setTimeout(function() {
-      	    that.log("Doorbell pressed");
-      	    that.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(that.state);
-  	}.bind(that), 10000);
+      	    this.log("Doorbell pressed");
+      	    this.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(this.state);
+  	}.bind(this), 10000);
     });
 }
 
