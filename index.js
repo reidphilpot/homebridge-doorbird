@@ -92,6 +92,21 @@ DoorBirdAccessory.prototype.setPowerOn = function(powerOn, callback) {
   }
 }
 
+DoobBirdAccessory.prototype.httpRequest: function(url, body, method, username, password, callback) {
+   request({
+	url: url,
+	body: body,
+	method: method,
+	auth: {
+		user: username,
+		pass: password
+		}
+	},
+	function(error, response, body) {
+		callback(error, response, body)
+	})
+}
+
 
 DoorBirdAccessory.prototype.identify = function(callback) {
     this.log("Identify requested!");
