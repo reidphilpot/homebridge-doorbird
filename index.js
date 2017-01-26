@@ -6,7 +6,7 @@ module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
   homebridge.registerPlatform("homebridge-doorbird", "Doorbell", DoorBirdPlatform);
-}
+};
 
 function DoorBirdPlatform(log, config) {
   // global vars
@@ -30,7 +30,7 @@ DoorBirdPlatform.prototype = {
 
 	  callback(foundAccessories);
   }
-}
+};
 
 function DoorBirdAccessory(log, config) {
   this.log = log;
@@ -53,7 +53,7 @@ function DoorBirdAccessory(log, config) {
             } else {                    
                 done(null, responseBody);
             }
-        })
+        });
     },
     {
         longpolling:true
@@ -75,7 +75,7 @@ DoorBirdAccessory.prototype.getState = function(callback) {
   var powerOn = this.binaryState > 0;
   this.log("Power state for the '%s' is %s", this.name, this.binaryState);
   callback(null, powerOn);
-}
+};
 
 DoorBirdAccessory.prototype.setPowerOn = function(powerOn, callback) {
   var self = this;
@@ -87,12 +87,12 @@ DoorBirdAccessory.prototype.setPowerOn = function(powerOn, callback) {
     setTimeout(function() {
       self.log("BEEP! BOOP!");
       self.service.getCharacteristic(Characteristic.On).setValue(0);
-      setInterval(self.request.bind(self), 100)
+      setInterval(self.request.bind(self), 100);
     }, this.timeout * 1000);
   }
-}
+};
 
-DoobBirdAccessory.prototype.httpRequest: function(url, body, method, username, password, callback) {
+DoobBirdAccessory.prototype.httpRequest = function(url, body, method, username, password, callback) {
    request({
 	url: url,
 	body: body,
@@ -103,10 +103,9 @@ DoobBirdAccessory.prototype.httpRequest: function(url, body, method, username, p
 		}
 	},
 	function(error, response, body) {
-		callback(error, response, body)
-	})
-}
-
+		callback(error, response, body);
+	});
+};
 
 DoorBirdAccessory.prototype.identify = function(callback) {
     this.log("Identify requested!");
@@ -125,7 +124,7 @@ DoorBirdAccessory.prototype.identify = function(callback) {
 	     this.log("Toggle state to 1");
     }
     callback();
-}
+};
 
 DoorBirdAccessory.prototype.getServices = function() {
 
@@ -139,4 +138,4 @@ DoorBirdAccessory.prototype.getServices = function() {
     .getCharacteristic(Characteristic.ProgrammableSwitchEvent);
 
 return [this.service];
-}
+};
