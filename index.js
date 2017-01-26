@@ -33,30 +33,31 @@ DoorBirdPlatform.prototype = {
 };
 
 function DoorBirdAccessory(log, config) {
+  self = this;
   this.log = log;
   this.name = config["name"];
   this.username = config["doorbird_username"];
   this.password = config["doorbird_password"];
   this.ip = config["doorbird_ip"];
-  this.url =  config["doorbird_url"];
+  this.url = config["doorbird_url"];
   this.binaryState = 0; // switch state, default is OFF
   this.log("Starting a homebridge-doorbird device with name '" + this.name + "'...");
   this.service;
   this.timeout = 2;
-  
+
   var emitter = pollingtoevent(function(done) {
-        this.httpRequest(this.url, "", "GET", this.username, this.password, function(error, response, responseBody) {
-            if (error) {
-                this.log('DoorBird get status failed: %s', error.message);
-                callback(error);
-            } else {                    
-                done(null, responseBody);
-            }
-        });
-    }.bind(this),
-    {
-        longpolling:true
-    });
+  this.httpRequest("http://" + this.ip + this.url + "?http-user=" + this.username + "&http-password=" + this.password, "", "GET", this.username, this.password, function(error, response, responseBody) {
+      if (error) {
+        self.log('DoorBird get status failed: %s', error.message);
+     	callback(error);
+      } else {
+	done(null, responseBody);
+      }
+   });
+   	}.bind(this), 
+   {
+	longpolling:true
+   });
 
     emitter.on("longpoll", function(data) {       
         var binaryState = parseInt(data.split(/[= ]+/).pop());
