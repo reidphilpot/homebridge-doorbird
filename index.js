@@ -63,7 +63,7 @@ function DoorBirdAccessory(log, config) {
         var binaryState = parseInt(data.split(/[= ]+/).pop());
         this.log("DoorBird doorbell state is currently ", binaryState);
 	
-	clearTimeout(this.timeout)
+	clearTimeout(this.timeout);
 	this.timeout = setTimeout(function() {
       	   this.service.getCharacteristic(Characteristic.On).setValue(binaryState);
     	}.bind(this), 1000);
@@ -99,7 +99,7 @@ DoorBirdAccessory.prototype.httpRequest = function(url, body, method, callback) 
 	
 	function(error, response, body) {
 		callback(error, response, body);
-	});
+	}});
 };
 
 DoorBirdAccessory.prototype.identify = function(callback) {
