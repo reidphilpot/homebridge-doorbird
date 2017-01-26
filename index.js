@@ -46,7 +46,7 @@ function DoorBirdAccessory(log, config) {
   this.timeout = 2;
 
   var emitter = pollingtoevent(function(done) {
-  this.httpRequest("http://" + this.ip + this.url + "?http-user=" + this.username + "&http-password=" + this.password, "", "GET", this.username, this.password, function(error, response, responseBody) {
+  this.httpRequest("http://" + this.ip + this.url + "&http-user=" + this.username + "&http-password=" + this.password, "", "GET", this.username, this.password, function(error, response, responseBody) {
       if (error) {
         self.log('DoorBird get status failed: %s', error.message);
      	callback(error);
