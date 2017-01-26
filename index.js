@@ -54,7 +54,8 @@ function DoorBirdAccessory(log, config) {
 	done(null, responseBody);
       }
    });
-   	}.bind(this), 
+   
+   }.bind(this), 
 			       
    {longpolling:true,interval:500,longpollEventName:"longpoll"});
 
@@ -90,13 +91,14 @@ DoorBirdAccessory.prototype.setPowerOn = function(powerOn, callback) {
   }
 };
 
-DoorBirdAccessory.prototype.httpRequest = function(url, method, callback) {
+DoorBirdAccessory.prototype.httpRequest = function(url, body, method, callback) {
    request({
 	url: url,
-	method: method
+	method: method,
+	body: body,
 	
-	function(error, response) {
-		callback(error, response);
+	function(error, response, body) {
+		callback(error, response, body);
 	});
 };
 
