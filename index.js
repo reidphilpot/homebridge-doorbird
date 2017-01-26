@@ -44,9 +44,9 @@ function DoorBirdAccessory(log, config) {
   this.log("Starting a homebridge-doorbird device with name '" + this.name + "'...");
   this.service;
   this.timeout = 2;
-
+  
   var emitter = pollingtoevent(function(done) {
-  this.httpRequest("http://" + this.ip + this.url + "&http-user=" + this.username + "&http-password=" + this.password, "GET", function(error, response, responseBody) {
+  this.httpRequest("http://" + this.ip + this.url + "&http-user=" + this.username + "&http-password=" + this.password, "", "GET", function(error, response, responseBody) {
       if (error) {
         self.log('DoorBird get status failed: %s', error.message);
      	callback(error);
@@ -91,13 +91,14 @@ DoorBirdAccessory.prototype.setPowerOn = function(powerOn, callback) {
   }
 };
 
-DoorBirdAccessory.prototype.httpRequest = function(url, method, callback) {
+DoorBirdAccessory.prototype.httpRequest = function(url, body, method, callback) {
    request({
 	url: url,
+        body: body,
 	method: method,
 	
-	function(error, response ) {
-		callback(error, response);
+	function(error, response, body) {
+		callback(error, response, body);
 	},
    });
 };
