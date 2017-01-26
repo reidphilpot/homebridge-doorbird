@@ -99,7 +99,8 @@ DoorBirdAccessory.prototype.httpRequest = function(url, body, method, callback) 
 	
 	function(error, response, body) {
 		callback(error, response, body);
-	}});
+	},
+   });
 };
 
 DoorBirdAccessory.prototype.identify = function(callback) {
