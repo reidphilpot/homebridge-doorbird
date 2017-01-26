@@ -91,13 +91,13 @@ DoorBirdAccessory.prototype.setPowerOn = function(powerOn, callback) {
   }
 };
 
-DoorBirdAccessory.prototype.httpRequest = function(url, body, method, callback) {
+DoorBirdAccessory.prototype.httpRequest = function(url, method, callback) {
    request({
 	url: url,
 	method: method
 	
-	function(error, response, body) {
-		callback(error, response, body);
+	function(error, response) {
+		callback(error, response);
 	});
 };
 
