@@ -27,8 +27,7 @@ DoorBirdPlatform.prototype = {
 		  var accessory  = new DoorBirdAccessory(this.log, this.devices[index]);
 		  foundAccessories.push(accessory);
 	  }
-
-	  callback(foundAccessories);
+      callback(foundAccessories);
   }
 };
 
