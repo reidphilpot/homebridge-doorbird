@@ -32,7 +32,7 @@ DoorBirdPlatform.prototype = {
 };
 
 function DoorBirdAccessory(log, config) {
-  self = this;
+  var self = this;
   this.log = log;
   this.name = config["name"];
   this.username = config["doorbird_username"];
@@ -49,12 +49,19 @@ function DoorBirdAccessory(log, config) {
     request.get(url, function(err, req, data) {
       done(err, data);
       });
-    });
+   },
+    
+  {longpolling:false,interval:100,longpollEventName:"poll"});  
 
   emitter.on("poll", function(data) {
     var binaryState = parseInt(data.split(/[= ]+/).pop());
-    this.log("DoorBird doorbell state is currently ", binaryState);     
-    this.service.getCharacteristic(Characteristic.On).setValue(binaryState);
+    
+    if(binaryState == 1) {
+      setTimeout(function() {
+        self.log("DoorBird doorbell pressed"); 
+        self.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(1);
+        }.bind(self), 1000);
+    }; 
   });
 
   emitter.on("error", function(err, data) {
