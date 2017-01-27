@@ -44,31 +44,24 @@ function DoorBirdAccessory(log, config) {
   this.log("Starting a homebridge-doorbird device with name '" + this.name + "'...");
   this.service;
   this.timeout = 2;
+  var url = "http://" + this.ip + this.url + "&http-user=" + this.username + "&http-password=" + this.password
   
   var emitter = pollingtoevent(function(done) {
-  this.httpRequest("http://" + this.ip + this.url + "&http-user=" + this.username + "&http-password=" + this.password, "", "GET", function(error, response, responseBody) {
-      if (error) {
-        self.log('DoorBird get status failed: %s', error.message);
-     	callback(error);
-      } else {
-	done(null, responseBody);
-      }
-   });
-   
-   }.bind(this), 
-			       
-   {longpolling:true,interval:500,longpollEventName:"longpoll"});
+    request.get(url, function(err, req, data) {
+      done(err, data);
+      });
+    });
 
-    emitter.on("longpoll", function(data) {       
-        var binaryState = parseInt(data.split(/[= ]+/).pop());
-        this.log("DoorBird doorbell state is currently ", binaryState);
-	
-	clearTimeout(this.timeout);
-	this.timeout = setTimeout(function() {
-      	   this.service.getCharacteristic(Characteristic.On).setValue(binaryState);
-    	}.bind(this), 1000);
-    }.bind(this));
-}	       
+  emitter.on("poll", function(data) {
+    var binaryState = parseInt(data.split(/[= ]+/).pop());
+    this.log("DoorBird doorbell state is currently ", binaryState);     
+    this.service.getCharacteristic(Characteristic.On).setValue(binaryState);
+  });
+
+  emitter.on("error", function(err, data) {
+    self.log('DoorBird get status failed: %s', error.message);
+  });
+};	   
 
 DoorBirdAccessory.prototype.getState = function(callback) {
   var powerOn = this.binaryState > 0;
@@ -89,18 +82,6 @@ DoorBirdAccessory.prototype.setPowerOn = function(powerOn, callback) {
       setInterval(self.request.bind(self), 100);
     }, this.timeout * 1000);
   }
-};
-
-DoorBirdAccessory.prototype.httpRequest = function(url, body, method, callback) {
-   request({
-	url: url,
-        body: body,
-	method: method,
-	
-	function(error, response, body) {
-		callback(error, response, body);
-	},
-   });
 };
 
 DoorBirdAccessory.prototype.identify = function(callback) {
