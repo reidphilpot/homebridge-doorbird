@@ -60,7 +60,7 @@ function DoorBirdAccessory(log, config) {
       setTimeout(function() {
         self.log("DoorBird doorbell pressed");
         self.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(1);
-        }.bind(self), 2500);
+        }.bind(self), 1000);
     };
     //reset state
     setTimeout(function() {
