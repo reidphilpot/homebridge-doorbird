@@ -61,7 +61,11 @@ function DoorBirdAccessory(log, config) {
         self.log("DoorBird doorbell pressed");
         self.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(1);
         }.bind(self), 2500);
-    }; 
+    };
+    //reset state
+    setTimeout(function() {
+        self.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(0);
+    }.bind(self), 10);  
   });
 
   emitter.on("error", function(err, data) {
