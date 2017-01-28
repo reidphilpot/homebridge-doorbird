@@ -65,7 +65,7 @@ function DoorBirdAccessory(log, config) {
   });
 
   emitter.on("error", function(err, data) {
-    self.log('DoorBird get status failed: %s', error.message);
+    self.log('DoorBird get status failed: %s', err.message);
   });
 };	   
 
