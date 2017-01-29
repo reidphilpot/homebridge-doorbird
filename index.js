@@ -53,17 +53,19 @@ function DoorBirdAccessory(log, config) {
     
   {longpolling:true,interval:100,longpollEventName:"poll"});  
 
-  emitter.on("poll", function(data) {
+    emitter.on("poll", function(data) {
     var binaryState = parseInt(data.split(/[= ]+/).pop());
     
     if(binaryState == 1) {
-      self.log("DoorBird doorbell pressed");
-      self.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(1);
-      //reset state
       setTimeout(function() {
+        self.log("DoorBird doorbell pressed");
+        self.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(1);
+        }.bind(self), 10);
+    };
+    //reset state
+    setTimeout(function() {
         self.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(0);
-      }.bind(self), 5000);  
-     };
+    }.bind(self), 2500);  
   });
 
   emitter.on("error", function(err, data) {
