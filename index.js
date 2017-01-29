@@ -117,10 +117,10 @@ DoorBirdAccessory.prototype.getServices = function() {
 
     this.service = new Service.Doorbell(this.name);
 
-    this.service
+    /*this.service
       .getCharacteristic(Characteristic.ProgrammableSwitchEvent)
       .on('get', this.getState.bind(this));
-
+    */
     var targetChar = this.service
     .getCharacteristic(Characteristic.ProgrammableSwitchEvent);
 
