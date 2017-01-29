@@ -51,7 +51,7 @@ function DoorBirdAccessory(log, config) {
       });
    },
     
-  {longpolling:true,interval:100,longpollEventName:"poll"});  
+  {longpolling:false,interval:100,longpollEventName:"poll"});  
 
     emitter.on("poll", function(data) {
     var binaryState = parseInt(data.split(/[= ]+/).pop());
