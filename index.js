@@ -65,7 +65,7 @@ function DoorBirdAccessory(log, config) {
     //reset state
     setTimeout(function() {
         self.service.getCharacteristic(Characteristic.ProgrammableSwitchEvent).setValue(0);
-    }.bind(self), 2500);  
+    }.bind(self), 5000);  
   });
 
   emitter.on("error", function(err, data) {
